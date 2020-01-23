@@ -11,32 +11,28 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 public class DataChart extends Application {
-
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		// TODO Auto-generated method stub
 		init(primaryStage);
-
 	}
 
 	private void init(Stage primaryStage) {
-
 		HBox root = new HBox();
 		Scene scene = new Scene(root, 450, 330);
 
 		NumberAxis xAxis = new NumberAxis();
-		xAxis.setLabel("Year");
+		xAxis.setLabel("Date");
 
 		NumberAxis yAxis = new NumberAxis();
-
-		yAxis.setLabel("A");
+		yAxis.setLabel("Close");
 
 		LineChart<Number, Number> lineChart = new LineChart<Number, Number>(xAxis, yAxis);
-		lineChart.setTitle("S");
+		lineChart.setTitle("Stock Predicting Graph");
 
 		XYChart.Series<Number, Number> data = new XYChart.Series<>();
 
 		// read csv file
+		// change the directory to work
 		String csvFile = "C:\\Users\\quanh\\Documents\\aal.us.csv";
 		String line = "";
 		String cvsSplitBy = ",";
@@ -44,7 +40,6 @@ public class DataChart extends Application {
 		try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
 			 br.readLine();
 			while ((line = br.readLine()) != null) {
-
 				// use comma as separator
 				String[] country = line.split(cvsSplitBy);
 				String dateString = country[0].replace("-", "");
