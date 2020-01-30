@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Control;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
@@ -18,7 +19,9 @@ public class DataChart extends Application {
 
 	private void init(Stage primaryStage) {
 		HBox root = new HBox();
-		Scene scene = new Scene(root, 450, 330);
+	    
+
+		Scene scene = new Scene(root, 1600, 600);
 
 		NumberAxis xAxis = new NumberAxis();
 		xAxis.setLabel("Date");
@@ -39,20 +42,26 @@ public class DataChart extends Application {
 
 		try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
 			 br.readLine();
+			 int i =0;
 			while ((line = br.readLine()) != null) {
+				
 				// use comma as separator
 				String[] country = line.split(cvsSplitBy);
 				String dateString = country[0].replace("-", "");
 				dateString = dateString.replace("\"", "");
 				int dateToInt = Integer.valueOf(dateString);
 				double closeToInt = Double.valueOf(country[4]);
-				data.getData().add(new XYChart.Data<Number, Number>(dateToInt, closeToInt));
+				data.getData().add(new XYChart.Data<Number, Number>(i, closeToInt));
+				i+=1;
 			}
 		} 
 		catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		lineChart.setMinSize(Control.USE_PREF_SIZE, Control.USE_PREF_SIZE);
+		lineChart.setPrefSize(1500, 600);
+		lineChart.setMaxSize(Control.USE_PREF_SIZE, Control.USE_PREF_SIZE);
+		
 		lineChart.getData().add(data);
 		root.getChildren().add(lineChart);
 		primaryStage.setTitle("Line");
